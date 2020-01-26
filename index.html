@@ -17,7 +17,11 @@
     font-weight: bold;
     font-size: 24px;
 }
-
+.answer-btn {
+    margin: 10px;
+    vertical-align: middle;
+    background: green;
+}
 
 </style>
 <body>
@@ -125,19 +129,19 @@ $(document).ready(function() {
                 $(".main-quiz-header").append(question);
             
             var buttons1 = $("<button>"); 
-                buttons1.addClass("answer-btn");
+                buttons1.addClass("answer-btn btn");
                 buttons1.text(answerArray[0]);
                 $(".buttons-div").append(buttons1);
             var buttons2 = $("<button>"); 
-                buttons2.addClass("answer-btn");
+                buttons2.addClass("answer-btn btn");
                 buttons2.text(answerOther[0]);
                 $(".buttons-div").append(buttons2);
             var buttons3 = $("<button>"); 
-                buttons3.addClass("answer-btn");
+                buttons3.addClass("answer-btn btn");
                 buttons3.text(answerOther2[0]);
                 $(".buttons-div").append(buttons3);
             var buttons4 = $("<button>"); 
-                buttons4.addClass("answer-btn");
+                buttons4.addClass("answer-btn btn");
                 buttons4.text(answerOther3[0]);  // console.log(buttons4.val);
                 $(".buttons-div").append(buttons4);
                 
@@ -153,8 +157,8 @@ $(document).ready(function() {
 
                 if (buttonId === "Elsa" || buttonId === "Anna" || buttonId === "Duke of Weselton")
                     {
-                    var feedbackLine = $("<hr>");
-                    var feedback = $("<div>");
+                        var feedbackLine = $("<hr>");
+                        var feedback = $("<div>");
                         feedback.text("Correct!");
                         $(".feedbackDiv").append(feedbackLine, feedback);
                         correct++;
@@ -184,7 +188,7 @@ $(document).ready(function() {
                 }
 //all done page. your score. input initials. submit.      
                 function results() {
-                    $(".feedbackDiv").empty();
+                    // $(".feedbackDiv").empty();
                     question.text("All Done!");
                     $(".buttons-div").empty();
                     yourScore = (Math.floor((correct / 3)*100));
@@ -207,6 +211,7 @@ $(document).ready(function() {
 
 //on submit, saves to localStorage. ouputs the quiz grade summary, and gives a 'clear highscores' option and a go back option. 
                     $(".final-submit-score").on("click", function() {
+                        $(".feedbackDiv").empty();
                         var userInitials = inputInitials.val();
 
                         $(".buttons-div").empty();
