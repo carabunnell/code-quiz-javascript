@@ -17,6 +17,8 @@
     font-weight: bold;
     font-size: 24px;
 }
+
+
 </style>
 <body>
     <div class="container">
@@ -35,19 +37,14 @@
             <div class="col-lg-2"></div>
             
             <div class="col-lg-8">
-                <div class="main-quiz-questions">
-                    <h1>Code Quiz</h1>
-                    <div class="instructions">To start playing the game, press start. </div>
-                    <div class="btn buttons-to-control">
-                        <button class="btn start-game">Start Game</button>
-                    </div>
-                </div>
+                    <div class="main-quiz-header"></div>
+                    <div class="quiz-sub-content"></div>
+                    <div class="buttons-div"></div>
+                    <!-- <div class="last-page"></div> -->
                 
-                <div class="list-of-answers"></div>
-                <div class="button-answer-div">
-                </div>
+                
             </div>
-            
+
             <div class="col-lg-2"></div>
         </div>
     </div>
@@ -58,69 +55,124 @@
 
 
     <script>
-
-        //ok so when the press start game, the div appears with the questoins, the input and the submit button. 
-        //a timer appears and it starts countdown of 1 min.
-        // when the submit button is pressed....it will determine whether the answer was right or wrong. 
-        // it will generate a new div to give the wrong or correct feedback. it will count how many wrong and how many correct as well.
-
-//BEFORE THE START BUTTON IS CLICKED, HAVE THE TIME AT 0 AND THE HIGHSCORES AVAILABLE TO BE CLICKED. 
-
-var i = 0; //timer stuff
-var timerEl = $(".countdown");
-//local storage stuff
-var count = localStorage.getItem("count");
-
-
-// question arrays variables
-var questionArray = ["What is the queen's name in Frozen?", "What is the queen's sister's name?", "What is the weezel's name?"];
-var answerArray = ["Elsa", "Anna", "Duke of Weselton"];
-var answerOther = ["Napolean", "Christoff", "Hamburger"];
-var answerOther2 = ["Food", "Chocolate", "Sandwiches"];
-var answerOther3 = ["Sven", "Olaf", "trolls"];
-
-//high scores
-var highScores = $("<div>");
+$(document).ready(function() {
+    
+    var questionArray = ["What is the queen's name in Frozen?", "What is the queen's sister's name?", "What is the weezel's name?"];
+    var answerArray = ["Elsa", "Anna", "Duke of Weselton"];
+    var answerOther = ["Napolean", "Christoff", "Hamburger"];
+    var answerOther2 = ["Food", "Chocolate", "Sandwiches"];
+    var answerOther3 = ["Sven", "Olaf", "trolls"];
+    
+    //high scores
+    var highScores = $("<div>");
             highScores.text("HighScores");
             $(".high-score").append(highScores);
 
-function startTimer() {
-                var timeLeft = 5;
+    //timer stuff
+    var timerEl = $(".countdown"); 
+    var i = 0; 
 
-                var timeInterval = setInterval(function() {
-                    timerEl.textContent = timeLeft + " seconds remaining";
-                    timeLeft--;
+    var correct;
+    var wrong;
 
-                    if (timeLeft === 0) {
-                    timerEl.textContent = "";
-                    speedRead();
-                    clearInterval(timeInterval);
-                    }
+    var welcomeHeader = $("<h1>");
+        welcomeHeader.text("Code Quiz");
+        $(".main-quiz-header").append(welcomeHeader);
+    var subHeader = $("<p>");
+        subHeader.text("Please press start to start the quiz");
+        $(".quiz-sub-content").append(subHeader);
+    var startGameBtn = $("<button>");
+        startGameBtn.addClass("start-game");
+        startGameBtn.text("Start Quiz");
+        $(".buttons-div").append(startGameBtn);
 
-                }, 1000);
-                }
+    //create the code quiz title and append to main-quiz-head-content
+//BEFORE THE START BUTTON IS CLICKED, HAVE THE TIME AT 0 AND THE HIGHSCORES AVAILABLE TO BE CLICKED. 
+
+
+    function startTimer() {
+        var timeLeft = 5;
+
+        var timeInterval = setInterval(function() {
+            timerEl.textContent = timeLeft + " seconds remaining";
+            timeLeft--;
+
+            if (timeLeft === 0) {
+                timerEl.textContent = "";
+                //call function for the questions
+                clearInterval(timeInterval);
+            }
+        }, 1000);
+    }
 
         $(".start-game").on("click", function() {
-            $(".main-quiz-questions").empty();
+            $(".main-quiz-header").empty();
+            $(".quiz-sub-content").empty();
+            $(".buttons-div").empty();
+
 
             startTimer();
 
             var question = $("<label>");
-                question.addClass("label-question")
-            question.text(questionArray[0]);
-            $(".main-quiz-questions").append(question);
-            var buttons = $("<button>");
+                question.addClass("label-question");
+                question.text(questionArray[0]);
+                $(".main-quiz-header").append(question);
+
+            var buttons1 = $("<button>"); 
+                buttons1.addClass("answer-btn");
+                buttons1.text(answerArray[0]);
+                $(".buttons-div").append(buttons1);
+            var buttons2 = $("<button>"); 
+                buttons2.addClass("answer-btn");
+                buttons2.text(answerOther[0]);
+                $(".buttons-div").append(buttons2);
+            var buttons3 = $("<button>"); 
+                buttons3.addClass("answer-btn");
+                buttons3.text(answerOther2[0]);
+                $(".buttons-div").append(buttons3);
+            var buttons4 = $("<button>"); 
+                buttons4.addClass("answer-btn");
+                buttons4.text(answerOther3[0]);
+                $(".buttons-div").append(buttons4);
                 
-                buttons.addClass("answer-btn");
-                
-                buttons.text(answerArray[0]);
-                $(".list-of-answers").append(buttons);
+
                 var click = 1;
             $(".answer-btn").on("click", function() {
                 if (click < questionArray.length) {
                     question.text(questionArray[click]);
-                    buttons.text(answerArray[click]);
+                    buttons1.text(answerArray[click]);
+                    buttons2.text(answerOther[click]);
+                    buttons3.text(answerOther2[click]);
+                    buttons4.text(answerOther3[click]);
                     click++;
+                }
+                //if what they clicked is wrong, an <hr> break line should appear and alos a div that says wrong and the time should be adjusted.
+                //if what they click is correct, same as above except with correct. both alerts should be only be there for about 2 seconds. 
+                else {
+                    question.text("All Done!");
+                    $(".buttons-div").empty();
+
+                var signInstructins = $("<p>");
+                    signInstructins.text("Here is your score: ");
+                    $(".quiz-sub-content").append(signInstructins);
+                
+                var initialInstr = $("<p>");
+                    initialInstr.text("Enter Initials: ");
+                    $(".buttons-div").append(initialInstr);
+                var inputInitials = $("<input>");
+                    $(".buttons-div").append(inputInitials);
+                var submitInitials = $("<button>");
+                    submitInitials.text("Submit");
+                    $(".buttons-div").append(submitInitials);
+
+                    //create input for initials
+                    //create submit button to send to local storage
+                //on submit click, prevent default? send to local storage.
+                //output should be the initians and the score. so basically what is in local storage
+                // two buttons for clear highscores that clears local storage
+                //second button for go back which should should trigger the opening page
+
+
                 }
                 
             });
@@ -130,9 +182,11 @@ function startTimer() {
             //high scores!! 
             //ALL DONE! PAGE . PLEASE INPUT YOUR INITIALS. CREATE INPUT DIV FOR THEM TO INPUT THEIR INITIALS. TAKE THEIR SCORE AND LOG IN TO THE INITIALS IN LOCAL STORAGE. GIVE THEM THE OPTION TO "GO BACK" AS IN START PAGE. OR CLEAR HIGHSCHORES. SO CLEAR LOGAL STORAGE. 
 
-            localStorage.setItem("count", count);
+            // localStorage.setItem("count", count);
             //
         });
+
+    });
         // it will generate a new question into the label div. and new answers into the "input" div. 
         //when the time is up , a div will replave the other divs saying times up!
     
