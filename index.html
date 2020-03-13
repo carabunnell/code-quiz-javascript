@@ -22,7 +22,9 @@
     vertical-align: middle;
     background: green;
 }
-
+.purplebackground {
+    background-color: plum;
+}
 </style>
 <body>
     <div class="container">
@@ -62,9 +64,9 @@
     <script>
 $(document).ready(function() {
     
-    var questionArray = ["What is the queen's name in Frozen?", "What is the queen's sister's name?", "What is the weezel's name?"];
-    var answerArray = ["Elsa", "Anna", "Duke of Weselton"];
-    var answerOther = ["Napolean", "Christoff", "Hamburger"];
+    var questionArray = ["What does API stand for?", "What does OOP stand for?", "What is JavaScript?"];
+    var answerArray = ["Application Program Interface", "Object-Oriented Programming", "An OOP language"];
+    var answerOther = ["Napoleon", "Christoff", "Hamburger"];
     var answerOther2 = ["Food", "Chocolate", "Sandwiches"];
     var answerOther3 = ["Sven", "Olaf", "trolls"];
     // var answerArrayTemp = ["Elsa", "Christoff", "Hamburger", "Chocolate",]
@@ -75,6 +77,10 @@ $(document).ready(function() {
     var highScores = $("<div>");
             highScores.text("View Highscores");
             $(".high-score").append(highScores);
+            // //highscores on click function
+            // $(".high-score").on("click", function() {
+            //     // show high scores 
+            // });
 
     //timer stuff
     var timerDiv = $(".countdown"); 
@@ -155,7 +161,7 @@ $(document).ready(function() {
                     console.log(buttonId);
                 
 
-                if (buttonId === "Elsa" || buttonId === "Anna" || buttonId === "Duke of Weselton")
+                if (buttonId === "Application Program Interface" || buttonId === "Object-Oriented Programming" || buttonId === "An OOP language")
                     {
                         var feedbackLine = $("<hr>");
                         var feedback = $("<div>");
@@ -209,7 +215,8 @@ $(document).ready(function() {
                     submitInitials.text("Submit");
                     $(".buttons-div").append(submitInitials);
 
-//on submit, saves to localStorage. ouputs the quiz grade summary, and gives a 'clear highscores' option and a go back option. 
+//on submit, saves to localStorage. ouputs the quiz grade summary, and gives a 'clear highscores' option and a go back option.          
+
                     $(".final-submit-score").on("click", function() {
                         $(".feedbackDiv").empty();
                         var userInitials = inputInitials.val();
@@ -218,6 +225,7 @@ $(document).ready(function() {
                         question.text("Highscores");
                         var finalOutputStored = (userInitials + " - " + yourScore + "%");
                         signInstructins.text(finalOutputStored);
+                        signInstructins.addClass("purplebackground");
 
                         localStorage.setItem("User", finalOutputStored);
 
@@ -235,7 +243,11 @@ $(document).ready(function() {
                                 localStorage.clear();
                                 $(".quiz-sub-content").empty();
                             });
+                           $(".final-submit-score").on("click", function() {
+                                location.reload();
+                           });
                     });
+                
                 } 
   
             });
