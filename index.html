@@ -64,9 +64,10 @@
     <script>
 $(document).ready(function() {
     
-    var questionArray = ["What does API stand for?", "What does OOP stand for?", "What is JavaScript?"];
-    var answerArray = ["Application Program Interface", "Object-Oriented Programming", "An OOP language"];
-    var answerOther = ["Napoleon", "Christoff", "Hamburger"];
+    var storageArray = [];
+    var questionArray = ["What is the queen's name in Frozen?", "What is the queen's sister's name?", "What is the weasel's name?"];
+    var answerArray = ["Elsa", "Anna", "Duke of Weselton"];
+    var answerOther = ["Napolean", "Christoff", "Hamburger"];
     var answerOther2 = ["Food", "Chocolate", "Sandwiches"];
     var answerOther3 = ["Sven", "Olaf", "trolls"];
     // var answerArrayTemp = ["Elsa", "Christoff", "Hamburger", "Chocolate",]
@@ -161,7 +162,7 @@ $(document).ready(function() {
                     console.log(buttonId);
                 
 
-                if (buttonId === "Application Program Interface" || buttonId === "Object-Oriented Programming" || buttonId === "An OOP language")
+                if (buttonId === "Elsa" || buttonId === "Anna" || buttonId === "Duke of Weselton")
                     {
                         var feedbackLine = $("<hr>");
                         var feedback = $("<div>");
@@ -226,6 +227,7 @@ $(document).ready(function() {
                         var finalOutputStored = (userInitials + " - " + yourScore + "%");
                         signInstructins.text(finalOutputStored);
                         signInstructins.addClass("purplebackground");
+                        storageArray.push(finalOutputStored);
 
                         localStorage.setItem("User", finalOutputStored);
 
